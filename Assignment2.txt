@@ -1,0 +1,281 @@
+Sarthik --> 
+
+ASSIGNMENT 2A
+
+CREATE Database dbms;
+ CREATE TABLE Employee(Emp_id INT PRIMARY KEY NOT NULL AUTO_I
+NCREMENT, Dept_id INT,Emp_fname VARCHAR(20), Emp_lname VARCHAR(20),Emp_position VARCHAR(20),Emp_salary INT, Emp_joinDate DATE);
+
+CREATE TABLE Dept(Dept_id INT PRIMARY KEY NOT NULL,Dept_name VARCHAR(20),Dept_location VARCHAR(20));
+CREATE TABLE Project(Proj_id INT,Dept_id INT,Proj_name VARCHAR(20),Proj_location VARCHAR(20),Proj_cost INT,FOREIGN KEY(Dept_id) REFERENCES Dept(Dept_id) ON DELETE CASCADE);
+
+INSERT INTO Employee(Dept_id,Emp_fname,Emp_lname,Emp_position,Emp_salary,Emp_joinDate) VALUES(202,'Kannika','Bangroo','HR',120000,'2023-02-01');
+Query OK, 1 row affected (0.007 sec)
+
+MariaDB [dbms]> INSERT INTO Employee(Dept_id,Emp_fname,Emp_lname,Emp_position,Emp_salary,Emp_joinDate) VALUES(203,'Ritika','Kher','Professor',80000,'2023-06-01');
+Query OK, 1 row affected (0.026 sec)
+
+MariaDB [dbms]> INSERT INTO Employee(Dept_id,Emp_fname,Emp_lname,Emp_position,Emp_salary,Emp_joinDate) VALUES(204,'Vijay','Kumar','SDE',1200000,'2024-06-01');
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [dbms]> INSERT INTO Employee(Dept_id,Emp_fname,Emp_lname,Emp_position,Emp_salary,Emp_joinDate) VALUES(205,'Sheetal','Sharma','Lawyer',230000,'2024-01-01');
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [dbms]> INSERT INTO Employee(Dept_id,Emp_fname,Emp_lname,Emp_position,Emp_salary,Emp_joinDate) VALUES(206,'Sandeep','Bangroo','Manager',1230000,'2000-01-01');
+Query OK, 1 row affected (0.007 sec)
+
+MariaDB [dbms]> INSERT INTO Employee(Dept_id,Emp_fname,Emp_lname,Emp_position,Emp_salary,Emp_joinDate) VALUES(207,'Anpurna','Bangroo','Teacher',230000,'1999-01-01');
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [dbms]> INSERT INTO Employee(Dept_id,Emp_fname,Emp_lname,Emp_position,Emp_salary,Emp_joinDate) VALUES(208,'Vansh','Kher','Doctor',1230000,'2025-01-01');
+Query OK, 1 row affected (0.026 sec)
+
+MariaDB [dbms]> INSERT INTO Employee(Dept_id,Emp_fname,Emp_lname,Emp_position,Emp_salary,Emp_joinDate) VALUES(209,'Nilesh','Bhat','Cricketer',230000,'2022-01-01');
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [dbms]> INSERT INTO Employee(Dept_id,Emp_fname,Emp_lname,Emp_position,Emp_salary,Emp_joinDate) VALUES(210,'Neha','Bhat','Govt Employee',230000,'2020-01-01');
+
+
+
+INSERT INTO Dept VALUES(201,'CE','Pune');
+Query OK, 1 row affected (0.026 sec)
+
+MariaDB [dbms]> INSERT INTO Dept VALUES(202,'MBA','Chandigrah');
+Query OK, 1 row affected (0.007 sec)
+
+MariaDB [dbms]> INSERT INTO Dept VALUES(203,'CE','Pune');
+Query OK, 1 row affected (0.007 sec)
+
+MariaDB [dbms]> INSERT INTO Dept VALUES(204,'IT','Pune');
+Query OK, 1 row affected (0.007 sec)
+
+MariaDB [dbms]> INSERT INTO Dept VALUES(205,'LLB','Jammu');
+Query OK, 1 row affected (0.026 sec)
+
+MariaDB [dbms]> INSERT INTO Dept VALUES(206,'MCom','Jammu');
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [dbms]> INSERT INTO Dept VALUES(207,'B.A','Jammu');
+Query OK, 1 row affected (0.007 sec)
+
+MariaDB [dbms]> INSERT INTO Dept VALUES(208,'MBBS','Mumbai');
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [dbms]> INSERT INTO Dept VALUES(209,'PHE','Bangalore');
+Query OK, 1 row affected (0.007 sec)
+
+MariaDB [dbms]> INSERT INTO Dept VALUES(210,'BA','Srinagar');
+Query OK, 1 row affected (0.002 sec)
+
+
+ INSERT INTO Project VALUES(301,201,'Brain Tumor Detection','Pune',1200000,'2023');
+ERROR 1406 (22001): Data too long for column 'Proj_name' at row 1
+MariaDB [dbms]> INSERT INTO Project VALUES(301,201,'Brain Detection','Pune',1200000,'2023');
+Query OK, 1 row affected (0.026 sec)
+
+MariaDB [dbms]> INSERT INTO Project VALUES(302,202,'Ordering web','Pune',20000,'2024');
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [dbms]> INSERT INTO Project VALUES(303,203,'CollegeManagement','Jammu',10000,'2020');
+Query OK, 1 row affected (0.007 sec)
+
+MariaDB [dbms]> INSERT INTO Project VALUES(304,204,'FarmerML','Pune',120000,'2023');
+Query OK, 1 row affected (0.007 sec)
+
+MariaDB [dbms]> INSERT INTO Project VALUES(305,205,'TestCase','Jammu',20000,'2025');
+Query OK, 1 row affected (0.007 sec)
+
+MariaDB [dbms]> INSERT INTO Project VALUES(306,206,'AyumedPharma','Jammu',120000,'2024');
+Query OK, 1 row affected (0.007 sec)
+
+MariaDB [dbms]> INSERT INTO Project VALUES(307,207,'SchoolManagement','Jammu',20000,'2020');
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [dbms]> INSERT INTO Project VALUES(308,208,'HeartAttactDetection','Mumbai',200000,'2026');
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [dbms]> INSERT INTO Project VALUES(309,209,'IPL','Bangalore',100000,'2025');
+Query OK, 1 row affected (0.009 sec)
+
+MariaDB [dbms]> INSERT INTO Project VALUES(310,210,'OfficeManagement','Srinagar',200000,'2028');'
+
+SELECT * FROM Employee e INNER JOIN Dept d using(Dept_id) WHERE Dept_name IN('CE','IT') AND Emp_fname REGEXP '^S|^V';
+
+SELECT DISTINCT(Emp_position) FROM Employee;
+
+SELECT concat(Emp_fname,' ',Emp_lname),Emp_salary AS 'EmpOldSal', Emp_salary+Emp_salary*0.01 AS 'EmpIncSal' FROM Employee WHERE Emp_joinDate<'2024-01-01';
+
+
+DELETE FROM Dept WHERE Dept_location='Mumbai';
+
+
+SELECT Proj_name,Proj_location FROM Project WHERE Proj_location='Pune';
+
+SELECT Proj_name,Proj_cost FROM Project WHERE Proj_cost BETWEEN 100000 AND 500000;
+
+SELECT Proj_name,MAX(Proj_cost) FROM Project;
+
+SELECT Emp_id,concat(Emp_fname,' ',Emp_lname)  FROM Employee ORDER BY Emp_lname;
+
+
+SELECT Proj_name,Proj_location,Proj_cost FROM Project WHERE Proj_year IN(2023,2020);
+
+
+
+
+
+
+
+------------------------------------------------------ASSIGNMENT 2B
+
+
+
+CREATE TABLE Student(S_id INT NOT NULL,Drive_id INT NOT NULL P
+RIMARY KEY AUTO_INCREMENT,T_id INT NOT NULL,S_name VARCHAR(20),CGPA Float,S_Branch VARCHAR(10),S_dob DATE);
+
+CREATE TABLE PlacementDrive(Drive_id INT,Pcompany_name VARCHAR(20),Package INT,Location VARCHAR(20),FOREIGN KEY(Drive_id) REFERENCES Student(Drive_id) ON DELETE CASCADE);
+
+CREATE TABLE Training(T_id INT,TCompany_name VARCHAR(20),T_Fee
+ INT,T_year YEAR);
+
+MariaDB [dbms]> INSERT INTO Student(S_id,T_id,S_name,CGPA,S_Branch,S_dob) VALUES(101,301,'Sarthik',10,'CE','2003-01-09');
+Query OK, 1 row affected (0.026 sec)
+
+MariaDB [dbms]> INSERT INTO Student(S_id,T_id,S_name,CGPA,S_Branch,S_dob) VALUES(102,302,'Ritika',9.7,'CE','2003-09-09');
+Query OK, 1 row affected (0.028 sec)
+
+MariaDB [dbms]> INSERT INTO Student(S_id,T_id,S_name,CGPA,S_Branch,S_dob) VALUES(103,303,'Vijay',9,'IT','2002-09-26');
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [dbms]> INSERT INTO Student(S_id,T_id,S_name,CGPA,S_Branch,S_dob) VALUES(104,304,'Kannika',8,'ENTC','1996-09-07');
+Query OK, 1 row affected (0.026 sec)
+
+MariaDB [dbms]> INSERT INTO Student(S_id,T_id,S_name,CGPA,S_Branch,S_dob) VALUES(105,305,'Ankush',7,'ENTC','1996-05-01');
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [dbms]> INSERT INTO Student(S_id,T_id,S_name,CGPA,S_Branch,S_dob) VALUES(106,306,'Sandeep',10,'CE','1994-05-10');
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [dbms]> INSERT INTO Student(S_id,T_id,S_name,CGPA,S_Branch,S_dob) VALUES(107,307,'Anpurna',7.5,'IT','1998-08-23');
+Query OK, 1 row affected (0.026 sec)
+
+MariaDB [dbms]> INSERT INTO Student(S_id,T_id,S_name,CGPA,S_Branch,S_dob) VALUES(108,308,'Dinesh',5,'IT','1991-03-20');
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [dbms]> INSERT INTO Student(S_id,T_id,S_name,CGPA,S_Branch,S_dob) VALUES(109,309,'Kohli',7.3,'ENTC','2016-09-10');
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [dbms]> INSERT INTO Student(S_id,T_id,S_name,CGPA,S_Branch,S_dob) VALUES(110,310,'Dhoni',8,'IT','2019-01-10');
+Query OK, 1 row affected (0.026 sec)
+
+
+INSERT INTO PlacementDrive VALUES(1,'Barclays',1400000,'Pune')
+;
+Query OK, 1 row affected (0.026 sec)
+
+MariaDB [dbms]> INSERT INTO PlacementDrive VALUES(2,'Mastercard',1000000,'Mumbai');
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [dbms]> INSERT INTO PlacementDrive VALUES(3,'Google',1200000,'Delhi');
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [dbms]> INSERT INTO PlacementDrive VALUES(4,'Bajaj',1100000,'Bangalore');
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [dbms]> INSERT INTO PlacementDrive VALUES(5,'IBM',1600000,'Bangalore');
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [dbms]> INSERT INTO PlacementDrive VALUES(6,'Microsoft',1900000,'Mumbai');
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [dbms]> INSERT INTO PlacementDrive VALUES(7,'Metro GSC',1500000,'Mumbai');
+Query OK, 1 row affected (0.026 sec)
+
+MariaDB [dbms]> INSERT INTO PlacementDrive VALUES(8,'BMC',1400000,'Pune');
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [dbms]> INSERT INTO PlacementDrive VALUES(9,'Infosys',1200000,'Gurgaon');
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [dbms]> INSERT INTO PlacementDrive VALUES(10,'Meta',2000000,'Bangalore');
+
+
+
+
+Insert into Training VALUES(301,'Barclays',10000,'2003');
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [dbms]> Insert into Training VALUES(302,'Mastercard',80000,'2023');
+Query OK, 1 row affected (0.025 sec)
+
+MariaDB [dbms]> Insert into Training VALUES(303,'Godrej',4000,'2021');
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [dbms]> Insert into Training VALUES(304,'Bajaj',6000,'2024');
+Query OK, 1 row affected (0.009 sec)
+
+MariaDB [dbms]> Insert into Training VALUES(305,'IBM',12000,'2023');
+Query OK, 1 row affected (0.025 sec)
+
+MariaDB [dbms]> Insert into Training VALUES(306,'Microsoft',9000,'2021');
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [dbms]> Insert into Training VALUES(307,'Metro GSC',0,'2020');
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [dbms]> Insert into Training VALUES(308,'BMC',10000,'2023');
+Query OK, 1 row affected (0.026 sec)
+
+MariaDB [dbms]> Insert into Training VALUES(309,'Infosys',7000,'2025');
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [dbms]> Insert into Training VALUES(310,'Meta',5000,'2021');
+Query OK, 1 row affected (0.006 sec)
+
+
+---Queries
+
+SELECT S_name,S_Branch FROM Student WHERE S_Branch IN('CE','IT') AND S_name REGEXP '^A|^D';
+
+SELECT DISTINCT(Pcompany_name) FROM PLacementDrive;
+
+SELECT TCompany_name,T_Fee AS 'Old Fee',T_Fee+(T_Fee*0.15) AS 'New Training Fee' FROM Training WHERE T_year=2021;
+
+DELETE FROM Student WHERE CGPA<7;
+
+SELECT Pcompany_name,Location FROM PlacementDrive WHERE Location IN('Pune','Mumbai');
+
+ SELECT S_name,T_year FROM Student s INNER JOIN Training t ON s.T_id=t.T_id WHERE t.T_year IN('2020','2021');
+
+SELECT S_name,MAX(CGPA) FROM Student;
+SELECT S_name,CGPA FROM Student WHERE CGPA BETWEEN 7 AND 9;
+
+SELECT S_name,t.T_id,T_Fee FROM Student s INNER JOIN Training t ON s.T_id=t.T_id ORDER BY T_Fee DESC;
+
+SELECT PCompany_name,S_name,Location,Package FROM Student s INNER JOIN PlacementDrive p WHERE s.Drive_id=p.Drive_id AND p.Package IN(30000,40000,50000);
+
+simple view -------------->>>>>
+CREATE VIEW my_view AS SELECT * FROM Employee;
+
+INSERT INTO my_view VALUES(11,211,'Dummy','dummy2','abc',21321,'2000-00-00');
+
+UPDATE my_view SET Emp_fname='dummy1' WHERE Emp_id=11;
+
+DROP VIEW my_view;
+
+--complex view --> cannot perform operations on complex view 
+
+
+CREATE View my_view AS SELECT * FROM Student s INNER JOIN PlacementDrive p using(Drive_id);
+
+
+---index 
+
+simple index
+CREATE Index my_index ON Student(S_name);
+EXPLAIN SELECT S_name from Student WHERE S_name='Sarthik';
+compound index
+CREATE INDEX my_index ON Student(S_name,CGPA);
+unique index	
+CREATE UNIQUE INDEX my_newIndex ON Student(T_id);
+

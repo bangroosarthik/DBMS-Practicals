@@ -1,0 +1,31 @@
+DROP PROCEDURE IF EXISTS calcFine;
+DELIMITER $$
+CREATE PROCEDURE calcFine(roll INT,bname VARCHAR(20))
+BEGIN
+	DECLARE i_date DATE;
+	DECLARE fineAmt INT;
+	DECLARE diff INT;
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION 
+	BEGIN 
+		ROLLBACK;
+		SIGNAL SQLSTATE '45000'
+		SET MESSAGE_TEXT='An Error Occured';
+	END;
+	SELECT DateOfIssue INTO i_date FROM Borrower WHERE Roll_no=roll AND NameofBook=bname AND Status!=0;
+	SET fineAmt=0;
+	SET diff=DATEDIFF(CURDATE(),i_date);
+	IF(diff<0) THEN 
+		SIGNAL SQLSTATE '45000'
+		SET MESSAGE_TEXT='Invalid Page Count';
+	ELSEIF(diff>15 AND diff<30) THEN
+		SET fineAmt=diff*5;
+	ELSEIF(diff>30) THEN 
+		SET fineAmt=15*5+(diff-30)*50;
+	ELSE
+		SET fineAmt=0;
+	END IF;
+	INSERT INTO fine VALUES(roll,i_date,fineAmt);
+	UPDATE Borrower SET Status=0 WHERE Roll_no=roll AND NameofBook=bname;
+
+
+END $$;

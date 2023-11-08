@@ -1,0 +1,25 @@
+DROP PROCEDURE IF EXISTS myProc;
+DELIMITER $$
+CREATE PROCEDURE myProc(IN mId INT)
+BEGIN
+DECLARE eId INT;
+DECLARE eName VARCHAR(20);
+DECLARE eSal INT;
+DECLARE duplicate INT;
+
+DECLARE myCur CURSOR FOR SELECT * FROM OEmp_Tab WHERE Id>mId;
+DECLARE CONTINUE HANDLER FOR 1062
+BEGIN
+SET duplicate=1;
+END;
+open myProc;
+l1: LOOP
+fetch myCur INTO eId,eName,eSal;
+INSERT INTO NEmp_Tab VALUES(eId,eName,eSal);
+IF duplicate=1 THEN 
+SET duplicate=0;
+SELECT 'Duplicate Record!';
+END IF;
+END LOOP l1;
+END;
+$$

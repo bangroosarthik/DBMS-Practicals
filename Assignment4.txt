@@ -1,0 +1,56 @@
+Sarthik --->>>
+
+Assignment 4 
+ CREATE TABLE Borrower(Roll INT PRIMARY KEY NOT NULL AUTO_INCREMENT,Name VARCHAR(20),DateofIssue DATE,NameofBook VARCHAR(20),Status VARCHAR(2));
+
+ CREATE TABLE Fine(Roll INT,Date DATE,Amt INT,Foreign Key(Rol
+l) REFERENCES Borrower(Roll));
+
+INSERT INTO Borrower(Name,DateofIssue,NameofBook,Status) VALUES ('Sarthik','2023-10-15','CNS','I');
+Query OK, 1 row affected (0.007 sec)
+
+MariaDB [dbms]> INSERT INTO Borrower(Name,DateofIssue,NameofBook,Status) VALUES ('Vijay','2023-10-20','DBMS','I');
+Query OK, 1 row affected (0.026 sec)
+
+MariaDB [dbms]> INSERT INTO Borrower(Name,DateofIssue,NameofBook,Status) VALUES ('Ritika','2023-10-01','TOC','I');
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [dbms]> INSERT INTO Borrower(Name,DateofIssue,NameofBook,Status) VALUES ('Kannika','2023-11-01','SPOS','I');
+Query OK, 1 row affected (0.007 sec)
+
+MariaDB [dbms]> INSERT INTO Borrower(Name,DateofIssue,NameofBook,Status) VALUES ('Avish','2023-10-10','DS','I');
+Query OK, 1 row affected (0.022 sec)
+
+
+
+DROP PROCEDURE IF EXISTS calc_fine;
+DELIMITER $$
+CREATE PROCEDURE calc_fine(IN rno INT,bname VARCHAR(20))
+BEGIN
+	DECLARE i_date DATE;
+	DECLARE fineAmt INT;
+	DECLARE diff INT;
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN	
+		ROLLBACK;
+		SIGNAL SQLSTATE '45000'
+		SET MESSAGE_TEXT='Error Occured';
+	END;
+	SELECT DateofIssue INTO i_date FROM Borrower WHERE Roll=rno AND NameofBook=bname AND Status!='R';
+	SET fineAmt=0;
+	SET diff=DATEDIFF(CURDATE(),i_date);
+	IF (diff<0) THEN 
+		SIGNAL SQLSTATE '45000'
+		SET MESSAGE_TEXT='Invalid Date Calculation';
+	ELSEIF (diff>15 AND diff<30) THEN 
+		SET fineAmt=diff*5;
+	ELSEIF (diff>30) THEN 
+		SET fineAmt= (30-diff)*50+15*5;
+	ELSE
+		SET fineAmt=0;
+	END IF;
+	INSERT INTO Fine VALUES(rno,i_date,fineAmt);
+	UPDATE Borrower SET Status='R' WHERE Roll=rno AND NameofBook=bname;
+END;
+$$
+DELIMITER ;

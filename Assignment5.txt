@@ -1,0 +1,44 @@
+Sarthik --->>>>>>
+Assignment 5
+
+CREATE TABLE Stud_Marks(Name VARCHAR(20),Total_marks INT);
+
+CREATE TABLE Result(Roll INT PRIMARY KEY NOT NULL,Name VARCH
+AR(20),Class VARCHAR(20));
+
+
+---Procedure
+DELIMITER $$
+CREATE Procedure procGrade(IN rno INT,OUT grade VARCHAR(20))
+BEGIN
+	DECLARE m INT;
+	SELECT Total_marks INTO m FROM Stud_Marks WHERE
+	Name=(SELECT Name FROM Result WHERE Roll=rno);	
+	IF(m>=990 AND m<=1500) THEN 
+		SELECT 'Distinction' INTO grade;
+		Update Result SET Class='Distinction' WHERE Roll=rno;
+	ELSEIF (m>=900 AND m<=989) THEN 
+		SELECT 'First Class' INTO grade;
+		Update Result SET Class='First Class' WHERE Roll=rno;
+	ELSEIF (m>=825 AND m<=899) THEN 
+		SELECT 'Higher Second Class' INTO grade;
+		Update Result SET Class='Higher Second Class' WHERE Roll=rno;
+	ELSE
+		SELECT '---' INTO grade;
+		Update Result SET Class='---' WHERE Roll=rno;
+	END IF;
+	
+END;
+$$
+
+
+
+DELIMITER $$
+CREATE Function my_func(rno INT)
+returns VARCHAR(20)
+BEGIN
+DECLARE grade VARCHAR(20);
+call procGrade(rno,grade);
+return grade;
+END;
+$$

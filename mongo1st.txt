@@ -1,0 +1,150 @@
+db.faculty.insertMany([
+    {
+        name: "Sarthik Bangroo",
+        qualifications: ["Btech", "Mtech"],
+        deptno: 1,
+        deptname: "CE",
+        designation: "HOD CE",
+        experience: { industry: "5 years", teaching: "10 years" },
+        salary: { basic: "100000", TA: "30000", DA: "200000", HRA: "1000000" },
+        dateofJoining: ISODate('2003-01-09'),
+        appointmentNature: "Permanent",
+        areaOfExpertise: "WEBDEV"
+    },
+    {
+        name: "John Doe",
+        qualifications: ["Btech", "Mtech"],
+        deptno: 2,
+        deptname: "EE",
+        designation: "Professor",
+        experience: { industry: "7 years", teaching: "12 years" },
+        salary: { basic: "90000", TA: "25000", DA: "180000", HRA: "900000" },
+        dateofJoining: ISODate('2005-03-15'),
+        appointmentNature: "Permanent",
+        areaOfExpertise: "Power Systems"
+    },
+    {
+        name: "Alice Smith",
+        qualifications: ["PhD"],
+        deptno: 3,
+        deptname: "ME",
+        designation: "Associate Professor",
+        experience: { industry: "3 years", teaching: "8 years" },
+        salary: { basic: "80000", TA: "22000", DA: "160000", HRA: "800000" },
+        dateofJoining: ISODate('2010-07-22'),
+        appointmentNature: "Permanent",
+        areaOfExpertise: "Thermal Engineering"
+    },
+    {
+        name: "Bob Johnson",
+        qualifications: ["Mtech"],
+        deptno: 1,
+        deptname: "CE",
+        designation: "Lecturer",
+        experience: { industry: "1 year", teaching: "4 years" },
+        salary: { basic: "60000", TA: "15000", DA: "120000", HRA: "600000" },
+        dateofJoining: ISODate('2015-11-10'),
+        appointmentNature: "Temporary",
+        areaOfExpertise: "Structural Engineering"
+    },
+    {
+        name: "Emily Wilson",
+        qualifications: ["PhD"],
+        deptno: 2,
+        deptname: "EE",
+        designation: "Professor",
+        experience: { industry: "8 years", teaching: "15 years" },
+        salary: { basic: "95000", TA: "28000", DA: "200000", HRA: "1000000" },
+        dateofJoining: ISODate('2007-06-04'),
+        appointmentNature: "Adhoc",
+        areaOfExpertise: "Control Systems"
+    },
+    {
+        name: "Michael Brown",
+        qualifications: ["Btech", "Mtech"],
+        deptno: 3,
+        deptname: "ME",
+        designation: "Associate Professor",
+        experience: { industry: "4 years", teaching: "9 years" },
+        salary: { basic: "82000", TA: "23000", DA: "170000", HRA: "850000" },
+        dateofJoining: ISODate('2009-02-18'),
+        appointmentNature: "Permanent",
+        areaOfExpertise: "Fluid Mechanics"
+    },
+    {
+        name: "Linda Davis",
+        qualifications: ["Mtech"],
+        deptno: 1,
+        deptname: "CE",
+        designation: "Lecturer",
+        experience: { industry: "2 years", teaching: "5 years" },
+        salary: { basic: "65000", TA: "16000", DA: "130000", HRA: "650000" },
+        dateofJoining: ISODate('2016-09-30'),
+        appointmentNature: "Permanent",
+        areaOfExpertise: "Geotechnical Engineering"
+    },
+    {
+        name: "James Wilson",
+        qualifications: ["PhD"],
+        deptno: 2,
+        deptname: "EE",
+        designation: "Professor",
+        experience: { industry: "9 years", teaching: "16 years" },
+        salary: { basic: "97000", TA: "30000", DA: "220000", HRA: "1100000" },
+        dateofJoining: ISODate('2006-04-17'),
+        appointmentNature: "Permanent",
+        areaOfExpertise: "Electronics"
+    },
+    {
+        name: "Karen Smith",
+        qualifications: ["Btech", "Mtech"],
+        deptno: 3,
+        deptname: "ME",
+        designation: "Associate Professor",
+        experience: { industry: "5 years", teaching: "10 years" },
+        salary: { basic: "85000", TA: "24000", DA: "180000", HRA: "900000" },
+        dateofJoining: ISODate('2011-10-12'),
+        appointmentNature: "Permanent",
+        areaOfExpertise: "Machine Design"
+    },
+    {
+        name: "Richard Johnson",
+        qualifications: ["Mtech"],
+        deptno: 1,
+        deptname: "CE",
+        designation: "Lecturer",
+        experience: { industry: "3 years", teaching: "6 years" },
+        salary: { basic: "70000", TA: "17000", DA: "140000", HRA: "700000" },
+        dateofJoining: ISODate('2017-12-03'),
+        appointmentNature: "Permanent",
+        areaOfExpertise: "Transportation Engineering"
+    }
+]);
+
+
+
+
+db.faculty.find()
+
+db.faculty.find().pretty()
+
+1. db.faculty.createIndex({designation:1})
+2.db.faculty.getIndexes()
+3.db.faculty.find().explain()
+4.db.faculty.find().explain('executionStats')
+5.db.faculty.dropIndex({designation:1})
+6.db.faculty.find({designation:"Professor"})
+7.db.faculty.find({designation:"Professor"}).explain('executionStats')
+8.db.faculty.createIndex({deptno:1,deptname:1})
+9.db.faculty.find({deptno:1})
+10.db.faculty.find({deptno:1}).explain()
+11.db.faculty.find({deptno:1,deptname:'CE'}).explain()
+12.db.faculty.find({deptno:1,deptname:'CE'})
+13.db.faculty.createIndex({areaOfExpertise:"text"})
+14.db.faculty.find({$text:{$search:"Transportation"}})
+15.db.faculty.find({$text:{$search:'Machine'}})
+16.db.faculty.aggregate({$group:{_id:"$deptno"}})
+17.db.faculty.aggregate({$group:{_id:"$deptno",name:{$push:"$name"}}})
+18.db.faculty.aggregate({$group:{_id:"$deptno",name:{$push:"$name"},total:{$sum:1}}})
+19.db.faculty.aggregate([{$group:{_id:"$deptno",details:"$$ROOT"}}])
+20.db.faculty.aggregate([{$match:{designation:"Professor"}},{$group:{_id:"$deptno",total:{$sum:1}}},{$sort:{total:-1}}])

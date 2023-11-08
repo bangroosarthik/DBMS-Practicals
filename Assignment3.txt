@@ -1,0 +1,58 @@
+Sarthik---->>>>>
+
+Assignment 3A
+-------------------
+SELECT * FROM employee NATURAL JOIN Dept; 
+in Natural join no need to equate attributes its does it automatically by its own.
+
+SELECT Emp_fname,Emp_position,Dept_location,Emp_joinDate FROM employee e INNER JOIN dept d ON e.Dept_id=d.Dept_id;
+
+SELECT Emp_fname,Emp_lname,Emp_position,Emp_salary,Emp_joinDate,Proj_id,Proj_cost FROM employee e INNER JOIN Project p ON e.Dept_id=p.Dept_id WHERE p.Proj_location<>'Hyderadabad';
+SELECT Dept_name,concat(Emp_fname,Emp_lname),Emp_position FROM Dept d INNER JOIN Employee e ON d.dept_id=e.dept_id INNER JOIN Project p ON d.dept_id=p.dept_id WHERE p.Proj_year='2020';
+
+SELECT Emp_position,Dept_name FROM Employee e INNER JOIN Dept d ON e.dept_id=d.dept_id INNER JOIN Project p ON d.dept_id=p.dept_id WHERE
+ Proj_cost>30000;
+
+
+SELECT Proj_name,Proj_year  FROM Project WHERE Proj_year>=2015;
+
+SELECT Emp_position,COUNT(Emp_position) FROM Employee GROUP BY Emp_position HAVING COUNT(Emp_position)=10;
+
+
+SELECT COUNT(Proj_year) AS 'Total' FROM Project WHERE Proj_year<2009;
+
+CREATE VIEW my_view AS SELECT * FROM Employee e INNER JOIN Dept d using(dept_id);
+
+CREATE VIEW my_view AS SELECT * FROM Dept;
+INSERT INTO my_view VALUES(211,'BSC','Mumbai');
+Update my_view SET Dept_name='BCOM' WHERE Dept_id=211;
+DELETE FROM my_view WHERE Dept_id=211;
+DROP VIEW my_view;
+
+----------------------------------------
+Assignment 3B
+
+select * From Student NATURAL JOIN PlacementDrive;
+
+SELECT S_id,s.Drive_id,T_id,S_name,CGPA,S_branch,S_dob,Pcompany_name,Package,Location FROM Student s INNER JOIN PlacementDrive p ON s.Drive_id=p.Drive_id;
+
+
+SELECT S_name,S_branch,Package FROM Student s INNER JOIN PlacementDrive p ON s.Drive_id=p.Drive_id WHERE p.Package=1500000;
+
+SELECT S_name,Pcompany_name FROM Student s INNER JOIN Placem
+entDrive p ON s.Drive_id=p.Drive_id INNER JOIN Training t ON s.T_id=t.T_id W
+HERE t.T_Fee>20000;
+
+
+SELECT S_name,T_id,TCompany_name,T_Fee,T_year FROM Student s INNER JOIN Training t using(T_id) WHERE S_name='Sarthik';
+
+SELECT COUNT(TCompany_name) FROM Training WHERE T_year<2015;
+
+SELECT S_name,Pcompany_name,Location FROM Student s INNER JOIN PlacementDrive p ON s.Drive_id=p.Drive_id WHERE Pcompany_name='Microsoft' AND Location='Mumbai';
+
+
+SELECT S_name FROM Student s INNER JOIN Training t using(T_id) WHERE TCompany_name='Microsoft' AND T_year=2021;
+
+CREATE VIEW my_view AS SELECT * FROM Student INNER JOIN Training using(T_id);
+
+INSERT INTO my_simpleview VALUES(111,11,311,'viewdummy',7,'IT','2000-01-01');
